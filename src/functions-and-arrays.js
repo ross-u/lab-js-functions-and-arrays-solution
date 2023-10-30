@@ -1,13 +1,37 @@
 // Iteration 1 | Find the Maximum
-function maxOfTwoNumbers() {}
+function maxOfTwoNumbers(num1, num2) {
+  if (num1 > num2) return num1;
+  else return num2;
+}
 
+// ES6 & ternary conditional
+// const maxOfTwoNumbers = (a, b) => (a > b ? a : b);
 
 
 
 // Iteration 2 | Find the Longest Word
 const words = ["mystery", "brother", "aviator", "crocodile", "pearl", "orchard", "crackpot"];
 
-function findLongestWord() {}
+function findLongestWord(wordsArr) {
+  if (!wordsArr.length) return 0;
+
+  //to start we take the first word as the longest one
+  let longestWord = wordsArr[0];
+
+  // use for loop to go through the wordsArr
+  for (let i = 1; i < wordsArr.length; i++) {
+    const word = wordsArr[i];
+    // if the current word is longer than the longestWord...
+    if (word.length > longestWord.length) {
+      // ... then that word becomes the new longestWord
+      longestWord = word;
+    }
+  }
+
+  return longestWord;
+}
+
+// findLongestWord(words)
 
 
 
@@ -15,7 +39,20 @@ function findLongestWord() {}
 // Iteration 3 | Sum Numbers
 const numbers = [6, 12, 1, 18, 13, 16, 2, 1, 8, 10];
 
-function sumNumbers() {}
+function sumNumbers (numbersArr) {
+  if (!numbersArr) return null;
+  let sum = 0;
+
+  for (let i = 0; i < numbersArr.length; i++) {
+    const num = numbersArr[i];
+
+    sum += num;
+  }
+
+  return sum;
+}
+
+// const result = sumNumbers(numbers);
 
 
 
@@ -23,7 +60,17 @@ function sumNumbers() {}
 // Iteration 4 | Numbers Average
 const numbers2 = [2, 6, 9, 10, 7, 4, 1, 9];
 
-function averageNumbers() {}
+function averageNumbers(numbersArray) {
+  if (numbersArray.length === 0) {
+    return 0;
+  }
+  else {
+    return sumNumbers(numbersArray) / numbersArray.length;
+  };
+}
+
+// const avg = averageNumbers(numbers2);
+
 
 
 
@@ -31,7 +78,52 @@ function averageNumbers() {}
 // Iteration 5 | Find Elements
 const words2 = ["machine", "subset", "trouble", "starting", "matter", "eating", "truth", "disobedience"];
 
-function doesWordExist() {}
+// super manual solution:
+function doesWordExist(wordsArr, word) {
+  if (wordsArr.length === 0) {
+    return null;
+  }
+
+  let doesExist = false;
+
+  for (let i = 0; i < wordsArr.length; i++){
+    if (wordsArr[i] === word){
+      doesExist = true;
+    }
+  }
+  
+  return doesExist;
+
+}
+
+
+// better then above:
+// function doesWordExist(wordsArr, word){
+//   if (wordsArr.length === 0) {
+//     return null;
+//   }
+
+//   for (let i = 0; i < wordsArr.length; i++){
+//     if (wordsArr[i] === word){
+//       return true;
+//     }
+//   }
+
+//   return false;
+// }
+
+// the shortest and the cleanest:
+// function doesWordExist(wordsArr, word) {
+//   if (wordsArr.length === 0) {
+//     return null;
+//   }
+//   else {
+//     return wordsArr.includes(word);
+//   }
+// }
+
+// doesWordExist(wordsFind, "machine"); // true
+// doesWordExist(wordsFind, "crab"); // false
 
 
 
@@ -51,7 +143,20 @@ const repeatedWords = [
   "matter"
 ];
 
-function howManyTimes() {}
+
+function howManyTimes(wordsArr, word) {
+  let count = 0;
+
+  for (let i = 0; i < wordsArr.length; i++){
+    if (wordsArr[i] === word) {
+      count++;
+    }
+  }
+
+  return count;
+}
+
+// howManyTimes(wordsCount, "matter")
 
 
 
@@ -72,7 +177,38 @@ const duplicateWords = [
   "bring"
 ];
 
-function uniquifyArray() {}
+function uniquifyArray (words) {
+  if (words.length === 0) {
+    return null;
+  }
+
+
+  let uniqueArr = [];
+  //   for (let i = 0; i < words.length; i++) {
+  //     let word = words[i];
+  //   }
+
+  for (let i = 0; i < words.length; i++) {
+    const word = words[i];
+    if (!uniqueArr.includes(word)) uniqueArr.push(word);
+
+    /* 
+    the other way doing the same as above:
+    - indexOf() => returns 1 (true) if the word already exists in the array
+    - indexOf() => returns -1 (false) if the word doesn't exist in the array
+    */
+    // if (uniqueArr.indexOf(word) < 0) {
+    //   uniqueArr.push(word);
+    // }
+    
+  }    
+
+  return uniqueArr;
+};
+
+// uniquifyArray(duplicatedWords)
+
+// const uniquifyArray = words => [ ...new Set(words) ];
 
 
 
@@ -101,4 +237,36 @@ const matrix = [
   [1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48]
 ];
 
-function greatestProduct() {}
+const greatestProduct = matrix => {
+  let product = 0;
+
+  const numberOfRows = matrix.length;
+  const numberOfColumns = matrix[0].length;
+
+  // console.log(numberOfRows);
+  // console.log(numberOfColumns)
+
+  for (let i = 0; i < numberOfRows; i++) {
+    let row = matrix[i];
+    for (let e = 0; e < numberOfColumns - 3; e++) {
+      // 0 - 1 - 2 - 3
+      // 1 - 2 - 3 - 4
+      let rowProduct = row[e] * row[e + 1] * row[e + 2] * row[e + 3];
+      if (rowProduct > product) {
+        product = rowProduct;
+      }
+    }
+  }
+
+  for (let i = 0; i < numberOfColumns; i++) {
+    for (let e = 0; e < numberOfRows - 3; e++) {
+      let columnProduct =
+        matrix[e][i] * matrix[e + 1][i] * matrix[e + 2][i] * matrix[e + 3][i];
+      if (columnProduct > product) {
+        product = columnProduct;
+      }
+    }
+  }
+
+  return product;
+};
